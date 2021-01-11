@@ -1,0 +1,10 @@
+i{
+    cursor:pointer;
+    
+}
+.center {
+    display: flex;
+    justify-content: center;
+    min-height: 1vh;
+  }
+
