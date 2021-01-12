@@ -33,36 +33,67 @@ titulo = 'Agregar Empelado'
   ngOnInit(): void {
     this.editarEmpleado();
   }
-  agregarEmpleado(){
+  agregarEditarEmpleado(){
     console.log(this.crearEmpleado);
     this.submit=true;
     if(this.crearEmpleado.invalid){
           return;
     }
-    const empleado: any = {
-      nombre: this.crearEmpleado.value.nombre,
-      apellido: this.crearEmpleado.value.apellido,
-      documento: this.crearEmpleado.value.documento,
-      salario: this.crearEmpleado.value.salario,
-      fechaCreacion: new Date(),
-      fechaActualizacion: new Date()
+    if(this.id === null){
+      this.agregarEmpleado();
+    }else{
+      this.editarEmpleados();
     }
-    this.loading=true;
-    this._empleadoservice.agregarEmpleado(empleado).then(()=>{
-      this.toastr.success('El empleado fue registrado con exito','Empleado registrado',{positionClass:'toast-bottom-right'});
-      this.loading=false;
-      this.router.navigate(['/listarEmpledos']);
-    }).catch(error =>{
-      console.log(error);
-      this.toastr.error('No sé qué pasó xd','Error',{positionClass:'toast-bottom-right'});
-      this.loading=false;
-    })
+ }
+ editarEmpleados(){
+  const empleado: any = {
+    nombre: this.crearEmpleado.value.nombre,
+    apellido: this.crearEmpleado.value.apellido,
+    documento: this.crearEmpleado.value.documento,
+    salario: this.crearEmpleado.value.salario,
+    fechaActualizacion: new Date()
+  }
+  this._empleadoservice.actualizarEmpleado(this.id,empleado).then(()=>{
+    this.loading=false;
+ 
+  this.loading=true;
+  this.toastr.success('El empleado fue actualizado con exito','Empleado modificado',{positionClass:'toast-bottom-right'});
+  this.router.navigate(['/listarEmpleados']);
+})
+}
+ agregarEmpleado(){
+  const empleado: any = {
+    nombre: this.crearEmpleado.value.nombre,
+    apellido: this.crearEmpleado.value.apellido,
+    documento: this.crearEmpleado.value.documento,
+    salario: this.crearEmpleado.value.salario,
+    fechaCreacion: new Date(),
+    fechaActualizacion: new Date()
+  }
+  this.loading=true;
+  this._empleadoservice.agregarEmpleado(empleado).then(()=>{
+    this.toastr.success('El empleado fue registrado con exito','Empleado registrado',{positionClass:'toast-bottom-right'});
+    this.loading=false;
+    this.router.navigate(['/listarEmpledos']);
+  }).catch(error =>{
+    console.log(error);
+    this.toastr.error('No sé qué pasó xd','Error',{positionClass:'toast-bottom-right'});
+    this.loading=false;
+  })
  }
  editarEmpleado(){
   if( this.id != null){
     this.titulo="Editar Empelado";
+    this.loading = true;
     this._empleadoservice.getEmpleado(this.id).subscribe(data=>{
-      console.log(data);
+      this.loading=false;
+      console.log(data.payload.data()['nombre']);
+      this.crearEmpleado.setValue({
+        nombre: data.payload.data()['nombre'],
+        apellido: data.payload.data()['apellido'],
+        documento: data.payload.data()['documento'],
+        salario: data.payload.data()['salario']
+      })
     })
   }
  }
