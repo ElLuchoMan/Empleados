@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmpleadoService } from '../../services/empleado.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -13,19 +13,25 @@ export class CreateEmpleadosComponent implements OnInit {
 crearEmpleado: FormGroup;
 submit =false;
 loading=false;
+id: string | null;
+titulo = 'Agregar Empelado'
   constructor(private fb: FormBuilder, 
     private _empleadoservice: EmpleadoService,
     private router: Router,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private aRoute: ActivatedRoute) {
     this.crearEmpleado = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       documento: ['', Validators.required],
       salario: ['', Validators.required],
     })
+    this.id=this.aRoute.snapshot.paramMap.get('id');
+    console.log(this.id);
    }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.editarEmpleado();
   }
   agregarEmpleado(){
     console.log(this.crearEmpleado);
@@ -51,5 +57,13 @@ loading=false;
       this.toastr.error('No sé qué pasó xd','Error',{positionClass:'toast-bottom-right'});
       this.loading=false;
     })
+ }
+ editarEmpleado(){
+  if( this.id != null){
+    this.titulo="Editar Empelado";
+    this._empleadoservice.getEmpleado(this.id).subscribe(data=>{
+      console.log(data);
+    })
+  }
  }
 }

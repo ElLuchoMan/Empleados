@@ -20,7 +20,7 @@
                     <td>{{empleado.documento}} </td>
                     <td>{{empleado.salario|currency}} </td>
                     <td>
-                        <i class="fas fa-user-edit fa-lg text-info mr-5"></i>
+                        <i class="fas fa-user-edit fa-lg text-info mr-5" [routerLink]="['/editarEmpleados',empleado.id]"></i>
                         <i (click)="eliminarEmpleado(empleado.id)"class="fas fa-user-minus fa-lg text-danger md-2"></i>
                     </td>
                   </tr>

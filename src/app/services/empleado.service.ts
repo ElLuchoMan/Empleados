@@ -17,4 +17,7 @@ return this.firestore.collection('empleados').add(empleado);
  eliminarEmpleados(id: string): Promise<any>{
 return this.firestore.collection('empleados').doc(id).delete();
  }
+ getEmpleado(id: string):Observable<any>{
+return this.firestore.collection('empleados').doc(id).snapshotChanges();
+ }
 }
