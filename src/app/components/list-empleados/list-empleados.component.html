@@ -2,7 +2,8 @@
   <div class="card text-center" >
     <div class="card-body">
             <h3>Listado de empleados</h3>
-              <table class= "table table-striped mt-5">
+            <h5 *ngIf="empleados.length==0" style="margin-top: 30px;" >No hay datos para mostrar</h5>
+              <table *ngIf="empleados.length > 0" class= "table table-striped mt-5">
                 <thead>
                   <tr>
                     <th>Nombre</th>
@@ -20,7 +21,7 @@
                     <td>{{empleado.salario|currency}} </td>
                     <td>
                         <i class="fas fa-user-edit fa-lg text-info mr-5"></i>
-                        <i class="fas fa-user-minus fa-lg text-danger md-2"></i>
+                        <i (click)="eliminarEmpleado(empleado.id)"class="fas fa-user-minus fa-lg text-danger md-2"></i>
                     </td>
                   </tr>
                               

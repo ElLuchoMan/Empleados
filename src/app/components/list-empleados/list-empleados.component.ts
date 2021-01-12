@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { EmpleadoService } from '../../services/empleado.service';
 import { element } from 'protractor';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-empleados',
@@ -12,7 +13,7 @@ import { element } from 'protractor';
 export class ListEmpleadosComponent implements OnInit {
   empleados: any[]=[];
 
-  constructor(private _empleadoService : EmpleadoService) {
+  constructor(private _empleadoService : EmpleadoService, private toastr: ToastrService) {
        }
 
   ngOnInit() {
@@ -28,6 +29,16 @@ export class ListEmpleadosComponent implements OnInit {
    });
    console.log(this.empleados);
   })
+  }
+  eliminarEmpleado(id:string){
+    this._empleadoService.eliminarEmpleados(id).then(()=>{
+      console.log('Empleado eliminado');
+      this.toastr.error('Empleado eliminado','El empleado se eliminó con éxito', {positionClass:"toast-bottom-right"});
+      
+    }).catch(error =>{
+      console.log(error);
+      this.toastr.error('Error','No sé qué pasó xd', {positionClass:"toast-bottom-right"});
+    })
   }
 
 }

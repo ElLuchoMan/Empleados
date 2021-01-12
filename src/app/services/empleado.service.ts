@@ -13,6 +13,8 @@ return this.firestore.collection('empleados').add(empleado);
  }
  getEmpleados():Observable<any>{
    return this.firestore.collection('empleados',ref=>ref.orderBy('fechaCreacion','asc')).snapshotChanges();
-
+ }
+ eliminarEmpleados(id: string): Promise<any>{
+return this.firestore.collection('empleados').doc(id).delete();
  }
 }
