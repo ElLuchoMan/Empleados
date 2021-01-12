@@ -13,11 +13,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of items | async">
-                    <td>{{item.nombre}}</td>
-                    <td>{{item.apellido}}</td>
-                    <td>{{item.documento}}</td>
-                    <td>{{item.salario}}</td>
+                  <tr *ngFor="let empleado of empleados">
+                    <td>{{empleado.nombre}} </td>
+                    <td>{{empleado.apellido}} </td>
+                    <td>{{empleado.documento}} </td>
+                    <td>{{empleado.salario}} </td>
                     <td>
                         <i class="fas fa-user-edit fa-lg text-info mr-5"></i>
                         <i class="fas fa-user-minus fa-lg text-danger md-2"></i>
