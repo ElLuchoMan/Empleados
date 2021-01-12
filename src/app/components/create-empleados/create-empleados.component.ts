@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateEmpleadosComponent implements OnInit {
 crearEmpleado: FormGroup;
 submit =false;
-invalid=false;
+loading=false;
   constructor(private fb: FormBuilder, 
     private _empleadoservice: EmpleadoService,
     private router: Router,
@@ -41,11 +41,15 @@ invalid=false;
       fechaCreacion: new Date(),
       fechaActualizacion: new Date()
     }
+    this.loading=true;
     this._empleadoservice.agregarEmpleado(empleado).then(()=>{
-      this.toastr.success('El empleado fue registrado con exito','Empleado registrado');
+      this.toastr.success('El empleado fue registrado con exito','Empleado registrado',{positionClass:'toast-bottom-right'});
+      this.loading=false;
       this.router.navigate(['/listarEmpledos']);
     }).catch(error =>{
       console.log(error);
+      this.toastr.error('No sé qué pasó xd','Error',{positionClass:'toast-bottom-right'});
+      this.loading=false;
     })
  }
 }
